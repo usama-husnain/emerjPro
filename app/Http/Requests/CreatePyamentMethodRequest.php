@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class CreateTransactionRequest extends FormRequest
+class CreatePyamentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,10 @@ class CreateTransactionRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'transaction_type_id' => 'required|exists:transaction_types,id',
-            'payment_method_id' => 'required|exists:payment_methods,id',
-            'transaction_ref' => 'required|string',
-            'status' => 'required|boolean',
-            'currency' => 'required|string',
-            'amount' => 'required|numeric|min:0',
-//            'created_by_user_id' => 'required|exists:users,id',
+            'payment_method_type_id' => 'required|exists:payment_method_types,id',
+            'name' => 'required|string',
+            'last_digits' => 'required',
+            'token' => 'required|string',
         ];
     }
 

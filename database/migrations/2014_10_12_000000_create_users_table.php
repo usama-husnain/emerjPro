@@ -26,8 +26,10 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->text('notes')->nullable();
             $table->string('profile')->nullable();
+            $table->string('stripe_id')->nullable();
             $table->string('register_ip')->nullable();
             $table->string('register_device')->nullable();
+            $table->timestamp('register_at')->nullable();
             $table->string('last_ip')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->boolean('terms_condition')->default(true);

@@ -9,7 +9,22 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Get all Users",
+     *     tags={"Users"},
+     *     security={{ "jwt_auth": {} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of Users retrieved successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(type="object")
+     *             ),
+     *         )
+     *     )
+     * )
      */
     public function index()
     {

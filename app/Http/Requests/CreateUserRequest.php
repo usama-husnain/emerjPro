@@ -35,6 +35,7 @@ class CreateUserRequest extends FormRequest
             'ibi_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'notes' => 'nullable|string',
+            'register_at' => 'nullable|date',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'address_line1' => 'required|string',
             'address_line2' => 'nullable|string',

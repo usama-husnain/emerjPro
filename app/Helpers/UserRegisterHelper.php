@@ -16,6 +16,7 @@ class UserRegisterHelper
         $inst = new self();
         $request['uuid'] = Str::random(10);
         $attachment = null;
+        $register_at = null;
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $destinationPath = 'profile/'.date('Y/m').'/';
@@ -23,11 +24,17 @@ class UserRegisterHelper
             $file->move($destinationPath, $fileName);
             $attachment = $destinationPath.$fileName;
 
-
         }
-
+        if(!$request->register_at){
+            $register_at = now();
+        }
+        else{
+            $carbonDate = Carbon::parse($request->register_at);
+            $register_at = $carbonDate->toDateTimeString();
+        }
         $data = $request->all();
         $data['profile'] = $attachment;
+        $data['register_at'] = $register_at;
         $user = User::create($data);
         $user->roles()->sync([$request->role_id]);
         $inst->address($request, $user);

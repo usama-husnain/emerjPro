@@ -26,11 +26,9 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
+
+
     protected $fillable = [
         'uuid',
         'first_name',
@@ -45,6 +43,8 @@ class User extends Authenticatable implements JWTSubject
         'phone_number',
         'notes',
         'profile',
+        'register_at',
+        'stripe_id',
         'register_ip',
         'register_device',
         'last_ip',
@@ -77,13 +77,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Role::class);
     }
 
-
     public function address(){
         return $this->hasOne(Address::class);
     }
+
     public function subscription(){
         return $this->hasOne(Subscription::class);
     }
+
     public function transaction(){
         return $this->hasOne(Transaction::class);
     }

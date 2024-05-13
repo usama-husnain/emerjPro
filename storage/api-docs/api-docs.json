@@ -1,0 +1,905 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Emerj Pro API",
+        "description": "API Documentation of Emerj Pro System",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "8e4e3cb7b46126f4696379d3c7eeb4ad",
+                "requestBody": {
+                    "description": "User registration data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "email",
+                                    "password",
+                                    "first_name",
+                                    "last_name",
+                                    "dob",
+                                    "ibi_id",
+                                    "ibi_name",
+                                    "phone_number",
+                                    "address_line1",
+                                    "city",
+                                    "state",
+                                    "country",
+                                    "region",
+                                    "subscription_type_id",
+                                    "currency",
+                                    "price",
+                                    "start_date",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "description": "Username",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "minLength": 8
+                                    },
+                                    "first_name": {
+                                        "description": "First name",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "last_name": {
+                                        "description": "Last name",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "dob": {
+                                        "description": "Date of birth (YYYY-MM-DD)",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "ibi_id": {
+                                        "description": "IBI ID",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "ibi_name": {
+                                        "description": "IBI name",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "phone_number": {
+                                        "description": "Phone number",
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "notes": {
+                                        "description": "Notes",
+                                        "type": "string"
+                                    },
+                                    "register_at": {
+                                        "description": "Registration date (YYYY-MM-DD)",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "profile": {
+                                        "description": "Profile image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "address_line1": {
+                                        "description": "Address line 1",
+                                        "type": "string"
+                                    },
+                                    "address_line2": {
+                                        "description": "Address line 2",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "City",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "State",
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "description": "Country",
+                                        "type": "string"
+                                    },
+                                    "region": {
+                                        "description": "Region",
+                                        "type": "string"
+                                    },
+                                    "subscription_type_id": {
+                                        "description": "Subscription type ID",
+                                        "type": "integer"
+                                    },
+                                    "currency": {
+                                        "description": "Currency",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Price",
+                                        "type": "number",
+                                        "format": "double"
+                                    },
+                                    "start_date": {
+                                        "description": "Start date (YYYY-MM-DD)",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "role_id": {
+                                        "description": "Role ID",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "description": "Bearer token",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Failed"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "description": "User login data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login successful"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "description": "Bearer token",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Login failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Failed"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Regresh Token",
+                "operationId": "f6409cd8d794404a6410b0767432b0f4",
+                "responses": {
+                    "200": {
+                        "description": "New Token Generated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Could not refresh token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/paymentMethods": {
+            "get": {
+                "tags": [
+                    "Payment Methods"
+                ],
+                "summary": "Get a list of payment methods",
+                "operationId": "155b93c619012d0259cd07cecd01eff6",
+                "responses": {
+                    "200": {
+                        "description": "List of payment methods",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "payment_method": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Payment Methods"
+                ],
+                "summary": "Register a new payment method",
+                "operationId": "10d63b68f35f59816f607924e39f6284",
+                "requestBody": {
+                    "description": "Payment method data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "payment_method_type_id",
+                                    "name",
+                                    "last_digits",
+                                    "token"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "User ID",
+                                        "type": "integer"
+                                    },
+                                    "payment_method_type_id": {
+                                        "description": "Payment method type ID",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "Name of the payment method",
+                                        "type": "string"
+                                    },
+                                    "last_digits": {
+                                        "description": "Last digits of the payment method",
+                                        "type": "string"
+                                    },
+                                    "token": {
+                                        "description": "Payment token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Payment method added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Payment method added successfully."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "payment_method": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Failed"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/paymentMethodTypes": {
+            "get": {
+                "tags": [
+                    "Payment Method Types"
+                ],
+                "summary": "Get all payment method types",
+                "operationId": "338f5e1ff2c1a25b57ba985fe407759a",
+                "responses": {
+                    "200": {
+                        "description": "List of Payment Method type retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get all Roles",
+                "operationId": "ca86f0a206144dfbd695b749b4b28f9d",
+                "responses": {
+                    "200": {
+                        "description": "List of Roles retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptionStatuses": {
+            "get": {
+                "tags": [
+                    "Subscription Statuses"
+                ],
+                "summary": "Get all Subscription statuses",
+                "operationId": "41eaa4bd765b51b2579334d92461a5fb",
+                "responses": {
+                    "200": {
+                        "description": "List of Subscription Statuses retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptionTypes": {
+            "get": {
+                "tags": [
+                    "Subscription Types"
+                ],
+                "summary": "Get all Subscription types",
+                "operationId": "aadb28260840412e6358e812acff0931",
+                "responses": {
+                    "200": {
+                        "description": "List of Subscription Types retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get all transactions",
+                "operationId": "9b50e29e364179ebde24ac5fc59cd442",
+                "responses": {
+                    "200": {
+                        "description": "List of transactions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create a new transaction",
+                "operationId": "54eaa3952808f639d46f969f4c8b98c5",
+                "requestBody": {
+                    "description": "Transaction data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "transaction_type_id",
+                                    "payment_method_id",
+                                    "transaction_ref",
+                                    "status",
+                                    "currency",
+                                    "amount"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "User ID",
+                                        "type": "integer"
+                                    },
+                                    "transaction_type_id": {
+                                        "description": "Transaction Type ID",
+                                        "type": "integer"
+                                    },
+                                    "payment_method_id": {
+                                        "description": "Payment Method ID",
+                                        "type": "integer"
+                                    },
+                                    "transaction_ref": {
+                                        "description": "Transaction reference",
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "description": "Transaction status",
+                                        "type": "boolean"
+                                    },
+                                    "currency": {
+                                        "description": "Transaction currency",
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "description": "Transaction amount",
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaction created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaction created successfully."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "transaction": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Failed"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "user_id": [
+                                                    "The user_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/transactionTypes": {
+            "get": {
+                "tags": [
+                    "Transaction Types"
+                ],
+                "summary": "Get all Transaction types",
+                "operationId": "e041ae4aecd7c3b5dadb69320ffa8068",
+                "responses": {
+                    "200": {
+                        "description": "List of Transaction Types retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all Users",
+                "operationId": "566aed8efb436ca506e0ef51a032ecd9",
+                "responses": {
+                    "200": {
+                        "description": "List of Users retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_auth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "jwt_auth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreatePyamentMethodRequest;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,7 +11,24 @@ use Illuminate\Http\Request;
 class PaymentMehtodController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/paymentMethods",
+     *     summary="Get a list of payment methods",
+     *     tags={"Payment Methods"},
+     *     security={{ "jwt_auth": {} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of payment methods",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(type="object",
+     *                     @OA\Property(property="payment_method", type="object"),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
      */
     public function index()
     {
@@ -21,10 +39,48 @@ class PaymentMehtodController extends Controller
             : $this->sendResponse([],'Record not found');
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/paymentMethods",
+     *     summary="Register a new payment method",
+     *     tags={"Payment Methods"},
+     *     security={{ "jwt_auth": {} }},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Payment method data",
+     *         @OA\JsonContent(
+     *             required={"user_id", "payment_method_type_id", "name", "last_digits", "token"},
+     *             @OA\Property(property="user_id", type="integer", description="User ID"),
+     *             @OA\Property(property="payment_method_type_id", type="integer", description="Payment method type ID"),
+     *             @OA\Property(property="name", type="string", description="Name of the payment method"),
+     *             @OA\Property(property="last_digits", type="string", description="Last digits of the payment method"),
+     *             @OA\Property(property="token", type="string", description="Payment token"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Payment method added successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Payment method added successfully."),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="payment_method", type="object"),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Validation Failed"),
+     *             @OA\Property(property="errors", type="object"),
+     *         )
+     *     )
+     * )
      */
-    public function store(Request $request)
+    public function store(CreatePyamentMethodRequest $request)
     {
         $getPaymentMethod = PaymentMethod::where('user_id', $request->user_id)
                             ->where('payment_method_type_id', $request->payment_method_type_id)
