@@ -46,12 +46,38 @@ class UserRegisterHelper
     }
 
 
+    public static function updateUser(Request $request, $user){
+        $inst = new self();
+        $data = $request->all();
+
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $destinationPath = 'profile/'.date('Y/m').'/';
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move($destinationPath, $fileName);
+            $attachment = $destinationPath.$fileName;
+            $data['profile'] = $attachment;
+        }
+
+        $user->update($data);
+        $user->roles()->sync([$request->role_id]);
+        $inst->address($request, $user);
+        $inst->subscription($request, $user);
+
+        return $user;
+
+
+    }
+
+
 
     public function address($request, $user)
     {
        $data = $request->only(['address_line1','address_line2','city','state','country','region']);
-       $data['user_id'] = $user->id;
-       Address::create($data);
+        $user->address()->updateOrCreate(
+            ['user_id' => $user->id],
+            $data
+        );
     }
 
     public function subscription($request, $user){
@@ -66,8 +92,10 @@ class UserRegisterHelper
             $data['next_billing_date'] = Carbon::parse($request->start_date)->addYear()->toDateString();
         }
         $data['uuid'] = $user->uuid;
-        $data['user_id'] = $user->id;
         $data['subscription_status_id'] = 1;
-        Subscription::create($data);
+        $user->subscription()->updateOrCreate(
+            ['user_id' => $user->id],
+            $data
+        );
     }
 }
